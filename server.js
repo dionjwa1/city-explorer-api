@@ -19,10 +19,10 @@ app.get('/weather', (request, response) => {
 
   const newArray = [];
   for (let i = 0; i < activate.data.length; i++) {
-    const allData = new Data(activate.data[i].datetime, activate.data[i].weather.description)
+    const allData = new Dataweather(activate.data[i].datetime, activate.data[i].weather.description);
 
 
-    newArray.push(allData)
+    newArray.push(allData);
 
   }
 
@@ -30,8 +30,8 @@ app.get('/weather', (request, response) => {
   response.status(200).json(newArray);
 });
 
-function Data(date, description) {
+function Dataweather(date, description) {
   this.date = date;
   this.description = description;
 
-};
+}
