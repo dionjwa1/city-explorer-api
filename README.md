@@ -20,7 +20,7 @@
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
-Name of feature: _______________Lab 07_________________
+Name of feature: _______________Lab 7_________________
 
 Estimate of time needed to complete: __4 hours___
 
@@ -29,3 +29,13 @@ Start time: ____1330_
 Finish time: 2130_____
 
 Actual time needed to complete: __8hrs___
+
+Name of feature: _______________Lab 8_________________
+
+Estimate of time needed to complete: __4 hours___
+
+Start time: ____1330_
+
+Finish time: 2215_____
+
+Actual time needed to complete: __8.5hrs___
