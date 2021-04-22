@@ -3,43 +3,49 @@
 require('dotenv').config();
 
 const superagent = require('superagent');
-
-//Application Dependencies
 const express = require('express');
 const cors = require('cors');
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(cors());
 app.get('/weather', getWeatherHandler);
+app.get('/', (request, response) => {
+  response.send('Weather Update');
+});
 
 
 async function getWeatherHandler(request, response) {
 
   const lat = request.query.lat;
   const lon = request.query.lon;
+ 
   const key = process.env.WEATHER_API_KEY;
 
   const url = `http://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}`;
 
-  const weatherResponse = await superagent.get(url);
+  const weatherResponse = await superagent.get(url).catch(e=> console.log('Error' , e) );
 
   const weatherObject = JSON.parse(weatherResponse.text);
 
-  // console.log(weatherArray);
-
+  
   const weatherArray = weatherObject.data;
+  
 
   const forecasts = weatherArray.map(day => new WeatherData(day));
   response.send(forecasts);
 }
-
 class WeatherData {
   constructor(day) {
-    this.forecast = day.weather.description
+    this.forecast = day.weather.description;
     this.time = day.datetime;
   }
 }
 
-const PORT = process.env.PORT || 3001;
+
+
+app.get('*', (request, response) => {
+  response.status(400,404,500).send('Error: Page not Found');
+});
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 
