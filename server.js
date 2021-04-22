@@ -15,23 +15,25 @@ app.get('/', (request, response) => {
   response.send('Weather Update');
 });
 
+const baseUrl = 'heroku website';
+
 
 async function getWeatherHandler(request, response) {
 
   const lat = request.query.lat;
   const lon = request.query.lon;
- 
+
   const key = process.env.WEATHER_API_KEY;
 
   const url = `http://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}`;
 
-  const weatherResponse = await superagent.get(url).catch(e=> console.log('Error' , e) );
+  const weatherResponse = await superagent.get(url).catch(e => console.log('Error', e));
 
   const weatherObject = JSON.parse(weatherResponse.text);
 
-  
+
   const weatherArray = weatherObject.data;
-  
+
 
   const forecasts = weatherArray.map(day => new WeatherData(day));
   response.send(forecasts);
@@ -39,7 +41,7 @@ async function getWeatherHandler(request, response) {
 
 async function getMovieHandler(request, response) {
   const movieKey = process.env.MOVIE_API_KEY;
-  const movieUrl= movieKey;
+  const movieUrl = movieKey;
 
   const movieResponse = await superagent.get(movieUrl);
   const movieObject = JSON.parse(movieResponse.text);
@@ -57,15 +59,15 @@ class WeatherData {
 class Movies {
   constructor(movie) {
     this.title = movie.title,
-    this.overview = movie.overview,
-    this.popularity = movie.popularity,
+      this.overview = movie.overview,
+      this.popularity = movie.popularity,
   }
 }
 
 
 
 app.get('*', (request, response) => {
-  response.status(400,404,500).send('Error: Page not Found');
+  response.status(400, 404, 500).send('Error: Page not Found');
 });
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 
