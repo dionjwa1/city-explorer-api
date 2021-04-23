@@ -39,3 +39,12 @@ Start time: ____1330_
 Finish time: 2215_____
 
 Actual time needed to complete: __8.5hrs___
+Name of feature: _______________Lab 9_________________
+
+Estimate of time needed to complete: __4 hours___
+
+Start time: ____1330_
+
+Finish time: _____
+
+Actual time needed to complete: __8.5hrs___
