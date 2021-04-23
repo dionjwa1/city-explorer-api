@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
   response.send('Weather Update');
 });
 
-// const baseUrl = 'heroku website';
+// const baseUrl = 'heroku website here';
 
 
 async function getWeatherHandler(request, response) {
