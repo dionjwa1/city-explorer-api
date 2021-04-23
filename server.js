@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
   response.send('Weather Update');
 });
 
-const baseUrl = 'heroku website';
+// const baseUrl = 'heroku website';
 
 
 async function getWeatherHandler(request, response) {
@@ -40,12 +40,15 @@ async function getWeatherHandler(request, response) {
 }
 
 async function getMovieHandler(request, response) {
+  console.log(request.query.movieLocation);
+  const cityName = request.query.movieLocation;
   const movieKey = process.env.MOVIE_API_KEY;
-  const movieUrl = movieKey;
+  const movieUrl = `https://api.themoviedb.org/3/search/movie?query=${cityName}&api_key=${movieKey}&page=1`;
 
   const movieResponse = await superagent.get(movieUrl);
   const movieObject = JSON.parse(movieResponse.text);
   const movie = movieObject.results.map(movie => new Movies(movie));
+  console.log(movie);
   response.send(movie);
 
 }
@@ -58,9 +61,9 @@ class WeatherData {
 
 class Movies {
   constructor(movie) {
-    this.title = movie.title,
-      this.overview = movie.overview,
-      this.popularity = movie.popularity,
+    this.title = movie.title;
+    this.overview = movie.overview;
+    this.popularity = movie.popularity;
   }
 }
 
