@@ -1,9 +1,9 @@
-// 'use strict';
+'use strict';
 const superagent = require('superagent');
-const cache = {};
+const cache = require('./cache.js');
 
 async function getMovieHandler(request, response) {
-  console.log(request.query.location);
+  console.log('test', request.query.location);
   let cacheKey = 'movies-' + request.query.location;
   const cachedMovieInfo = cache[cacheKey];
   if (cachedMovieInfo === undefined) {
