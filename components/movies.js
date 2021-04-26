@@ -1,18 +1,25 @@
 // 'use strict';
 const superagent = require('superagent');
-
+const cache = {};
 
 async function getMovieHandler(request, response) {
-  console.log(request.query.movieLocation);
-  const cityName = request.query.movieLocation;
-  const movieKey = process.env.MOVIE_API_KEY;
-  const movieUrl = `https://api.themoviedb.org/3/search/movie?query=${cityName}&api_key=${movieKey}&page=1`;
+  console.log(request.query.location);
+  let cacheKey = 'movies-' + request.query.location;
+  const cachedMovieInfo = cache[cacheKey];
+  if (cachedMovieInfo === undefined) {
+    const cityName = request.query.location;
+    const movieKey = process.env.MOVIE_API_KEY;
+    const movieUrl = `https://api.themoviedb.org/3/search/movie?query=${cityName}&api_key=${movieKey}&page=1`;
 
-  const movieResponse = await superagent.get(movieUrl);
-  const movieObject = JSON.parse(movieResponse.text);
-  const movie = movieObject.results.map(movie => new Movies(movie));
-  console.log(movie);
-  response.send(movie);
+    const movieResponse = await superagent.get(movieUrl);
+    const movieObject = JSON.parse(movieResponse.text);
+    const movie = movieObject.results.map(movie => new Movies(movie));
+    cache[cacheKey] = movie;
+    response.send(movie);
+  } else {
+    console.log('cached');
+    response.send(cachedMovieInfo);
+  }
 
 }
 
@@ -26,4 +33,4 @@ class Movies {
   }
 }
 
-module.exports = getMovieHandler; 
+module.exports = getMovieHandler;
